@@ -15,3 +15,26 @@ Je viens d'ouvrir un restaurant de Kebabs et afin de gérer mon système de pris
 Ajouter une méthode à l'objet Kebab afin de savoir s'il est pescétarien.
 
 > Le pescétarisme, ou pesco-végétarisme, est un néologisme désignant le régime alimentaire d'une personne omnivore qui s'abstient de consommer de la chair animale à l'exception de celle issue des poissons, des crustacés et mollusques aquatiques.
+
+## Etape 3
+
+Ajouter les possibilités suivantes :
+- Un système de doublage du fromage (double cheese)
+- Un système pour enlever les oignons
+
+Dans tout les cas, l'ordre des couches ne doit pas être modifié (ordre constant).
+
+Pour le double cheese :
+- si le kebab n'a pas de fromage, ne rien faire
+- s'il y a du fromage alors le doubler au même endroit de le fromage existant.
+
+ex :
+
+```
+S|T|F -> S|T|F|F
+F|S|F|T -> F|F|S|F|F|T
+```
+
+- C : Fromage
+- S : Salade
+- T : Tomate
