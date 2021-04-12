@@ -38,3 +38,9 @@ F|S|F|T -> F|F|S|F|F|T
 - C : Fromage
 - S : Salade
 - T : Tomate
+
+## Etape 4
+
+Bravo, vous venez probablement d'obtenir un bon code legacy :) 
+
+Si ne n'est pas le cas, faites marcher votre code puis réféchir à comment vous auriez pu architecturer votre code maintenant que vous avez une meilleure vision du projet.
