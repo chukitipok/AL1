@@ -93,4 +93,4 @@ var list = new List<string> { "Mickael", "Nicolas" };
 var sortedList = sortListHelper.Sort(list);
 ```
 
-Interet : Permet de réaliser des opérations de différentes manières avec une seule méthode
+Le design pattern strategy est un design pattern de comportement qui permet de changer le comportement d'un objet en lui injectant des comportements.

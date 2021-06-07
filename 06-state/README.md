@@ -53,7 +53,7 @@ public class Video
 
 En fait ceci est une machine à état avec les transitions suivantes stop -> start et start -> stop. 
 
-Le nombre de transitions est ici assez limité mais il est facile d'appercevoir que que plus le nombre d'états et de conditions de transition va augmenter plus notre code va ressembler à du code spaghetti.
+Le nombre de transitions est ici assez limité mais il est facile d'appercevoir que plus le nombre d'états et de conditions de transition vont augmenter, plus notre code va ressembler à du code spaghetti...
 
 Tentons donc d'améliorer notre code en isolant les comportements en fonction des états :
 
@@ -117,4 +117,4 @@ public class Video
 }
 ```
 
-Interet : Permet d'isoler des comportements spécifiques à des états
+Le design pattern state est un design pattern de comportement qui permet de modéliser une machine à états en isolant les comportements et les transitions en fonction d'un état.

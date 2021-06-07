@@ -42,7 +42,6 @@ var result = postgresSQLBdd.Execute("ma requete sql");
 postgresSQLBdd.CloseConnection();
 ```
 
-
 Finalement, encore après quelques temps, il nous est demandé de pouvoir laisser le choix du type de base de donnée à la personne installant le logiciel... En réfléchissant, nous nous rendons compte que les bases de donnée SQLServer et PostgreSQL offrent globalement le meme service; la chose qui change c'est la manière de réaliser ces services.
 
 Tentons d'unifier les services communs :
