@@ -6,6 +6,7 @@ namespace csharpcore
 {
     public class Game
     {
+        public static List<string> lines = new List<string>();
         List<string> players = new List<string>();
 
         int[] places = new int[6];
@@ -61,8 +62,8 @@ namespace csharpcore
 
         public void roll(int roll)
         {
-            Console.WriteLine(players[currentPlayer] + " is the current player");
-            Console.WriteLine("They have rolled a " + roll);
+            WriteLine(players[currentPlayer] + " is the current player");
+            WriteLine("They have rolled a " + roll);
 
             if (inPenaltyBox[currentPlayer])
             {
@@ -70,19 +71,19 @@ namespace csharpcore
                 {
                     isGettingOutOfPenaltyBox = true;
 
-                    Console.WriteLine(players[currentPlayer] + " is getting out of the penalty box");
+                    WriteLine(players[currentPlayer] + " is getting out of the penalty box");
                     places[currentPlayer] = places[currentPlayer] + roll;
                     if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 
-                    Console.WriteLine(players[currentPlayer]
+                    WriteLine(players[currentPlayer]
                                       + "'s new location is "
                                       + places[currentPlayer]);
-                    Console.WriteLine("The category is " + currentCategory());
+                    WriteLine("The category is " + currentCategory());
                     askQuestion();
                 }
                 else
                 {
-                    Console.WriteLine(players[currentPlayer] + " is not getting out of the penalty box");
+                    WriteLine(players[currentPlayer] + " is not getting out of the penalty box");
                     isGettingOutOfPenaltyBox = false;
                 }
             }
@@ -91,10 +92,10 @@ namespace csharpcore
                 places[currentPlayer] = places[currentPlayer] + roll;
                 if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 
-                Console.WriteLine(players[currentPlayer]
+                WriteLine(players[currentPlayer]
                                   + "'s new location is "
                                   + places[currentPlayer]);
-                Console.WriteLine("The category is " + currentCategory());
+                WriteLine("The category is " + currentCategory());
                 askQuestion();
             }
         }
@@ -103,25 +104,25 @@ namespace csharpcore
         {
             if (currentCategory() == "Pop")
             {
-                Console.WriteLine(popQuestions.First());
+                WriteLine(popQuestions.First());
                 popQuestions.RemoveFirst();
             }
 
             if (currentCategory() == "Science")
             {
-                Console.WriteLine(scienceQuestions.First());
+                WriteLine(scienceQuestions.First());
                 scienceQuestions.RemoveFirst();
             }
 
             if (currentCategory() == "Sports")
             {
-                Console.WriteLine(sportsQuestions.First());
+                WriteLine(sportsQuestions.First());
                 sportsQuestions.RemoveFirst();
             }
 
             if (currentCategory() == "Rock")
             {
-                Console.WriteLine(rockQuestions.First());
+                WriteLine(rockQuestions.First());
                 rockQuestions.RemoveFirst();
             }
         }
@@ -147,9 +148,9 @@ namespace csharpcore
             {
                 if (isGettingOutOfPenaltyBox)
                 {
-                    Console.WriteLine("Answer was correct!!!!");
+                    WriteLine("Answer was correct!!!!");
                     purses[currentPlayer]++;
-                    Console.WriteLine(players[currentPlayer]
+                    WriteLine(players[currentPlayer]
                                       + " now has "
                                       + purses[currentPlayer]
                                       + " Gold Coins.");
@@ -169,9 +170,9 @@ namespace csharpcore
             }
             else
             {
-                Console.WriteLine("Answer was corrent!!!!");
+                WriteLine("Answer was corrent!!!!");
                 purses[currentPlayer]++;
-                Console.WriteLine(players[currentPlayer]
+                WriteLine(players[currentPlayer]
                                   + " now has "
                                   + purses[currentPlayer]
                                   + " Gold Coins.");
@@ -186,13 +187,19 @@ namespace csharpcore
 
         public bool wrongAnswer()
         {
-            Console.WriteLine("Question was incorrectly answered");
-            Console.WriteLine(players[currentPlayer] + " was sent to the penalty box");
+            WriteLine("Question was incorrectly answered");
+            WriteLine(players[currentPlayer] + " was sent to the penalty box");
             inPenaltyBox[currentPlayer] = true;
 
             currentPlayer++;
             if (currentPlayer == players.Count) currentPlayer = 0;
             return true;
+        }
+
+        private void WriteLine(string questionWasIncorrectlyAnswered)
+        {
+            lines.Add(questionWasIncorrectlyAnswered);
+            Console.WriteLine(questionWasIncorrectlyAnswered);
         }
 
 
