@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
@@ -14,9 +13,12 @@ namespace csharpcore
         {
             Game aGame = new Game();
 
-            aGame.add("Chet");
-            aGame.add("Pat");
-            aGame.add("Sue");
+            var consoleListener = new GameConsoleListener();
+            aGame.Publish += consoleListener.Handle;
+
+            aGame.Add("Chet");
+            aGame.Add("Pat");
+            aGame.Add("Sue");
 
             Random rand = new Random();
 
@@ -24,16 +26,19 @@ namespace csharpcore
             {
                 var randomValue = next(5, rand);
 
-                aGame.roll(randomValue + 1);
+                aGame.Roll(randomValue + 1);
 
                 if (next(9, rand) == 7)
                 {
-                    notAWinner = aGame.wrongAnswer();
+                    notAWinner = aGame.WrongAnswer();
                 }
                 else
                 {
-                    notAWinner = aGame.wasCorrectlyAnswered();
+                    notAWinner = aGame.CorrectAnswer();
                 }
+                
+                aGame.NextPlayer();
+
             } while (notAWinner);
         }
 
@@ -46,41 +51,47 @@ namespace csharpcore
             // Plutot que random envoyer le seed courant
             Random rand = new Random();
 
+            var cpt = 0;
             for (var i = 0; i < 100; i++)
             {
                 Game aGame = new Game();
 
-                aGame.add("Chet");
-                aGame.add("Pat");
-                aGame.add("Sue");
+                aGame.Add("Chet");
+                aGame.Add("Pat");
+                aGame.Add("Sue");
 
                 do
                 {
-                    var randomValue = next(5, rand);
-                    File.AppendAllLines("seed.txt", new[] {randomValue.ToString()});
-                    aGame.roll(randomValue + 1);
+                    var randomValue = seed[cpt];
+                    cpt += 1;
+                    aGame.Roll(randomValue + 1);
 
-                    randomValue = next(9, rand);
-                    File.AppendAllLines("/tmp/seed.txt", new[] {randomValue.ToString()});
+                    randomValue = seed[cpt + 1];
+                    cpt += 1;
 
                     if (randomValue == 7)
                     {
-                        notAWinner = aGame.wrongAnswer();
+                        notAWinner = aGame.WrongAnswer();
                     }
                     else
                     {
-                        notAWinner = aGame.wasCorrectlyAnswered();
+                        notAWinner = aGame.CorrectAnswer();
                     }
                 } while (notAWinner);
-
-                // Comparere les lignes avec output
+                
+                
             }
+
+            // for (int i = 0; i < output.Count; i++)
+            // {
+            //     Assert.Equal(output[i], Game.lines[i]);
+            // }
         }
 
 
         private static int next(int max, Random rand)
         {
-            return rand.Next(5);
+            return rand.Next(max);
             //
             // Stack<int> randomNumber = new Stack<int>(new [] {
             //
@@ -127,11 +138,11 @@ namespace csharpcore
         //         do
         //         {
         //             var randomValue = next(5, rand);
-        //             File.AppendAllLines("seed.txt", new []{ randomValue.ToString() });
+        //             File.AppendAllLines("seed1.txt", new[] {randomValue.ToString()});
         //             aGame.roll(randomValue + 1);
-        //         
+        //
         //             randomValue = next(9, rand);
-        //             File.AppendAllLines("/tmp/seed.txt", new []{ randomValue.ToString() });
+        //             File.AppendAllLines("/tmp/seed1.txt", new[] {randomValue.ToString()});
         //
         //             if (randomValue == 7)
         //             {
@@ -142,10 +153,11 @@ namespace csharpcore
         //                 notAWinner = aGame.wasCorrectlyAnswered();
         //             }
         //         } while (notAWinner);
-        //         
-        //         File.AppendAllLines("/tmp/output.txt", Game.lines );
+        //
+        //         File.AppendAllLines("/tmp/output1.txt", Game.lines);
         //
         //     }
-    }
+        }
+    
 }
 
