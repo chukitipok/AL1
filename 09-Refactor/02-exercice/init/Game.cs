@@ -68,8 +68,6 @@ namespace csharpcore
     {
         public event Action<object> Publish;
 
-        private bool isGettingOutOfPenaltyBox;
-
         private readonly Board _board;
 
         public Game()
@@ -92,13 +90,12 @@ namespace csharpcore
             {
                 Raise(new PlayerStayedPenaltyBox(_board.CurrentPlayer.Name));
 
-                isGettingOutOfPenaltyBox = false;
                 return;
             }
 
             if (_board.CurrentPlayer.IsInPenaltyBox && !IsRollEven(roll))
             {
-                isGettingOutOfPenaltyBox = true;
+                _board.CurrentPlayer.SetPlayerOutOfPenaltyBox();
 
                 Raise(new PlayerLeftPenaltyBox(_board.CurrentPlayer.Name));
             }
@@ -112,7 +109,7 @@ namespace csharpcore
 
         public bool CorrectAnswer()
         {
-            if (_board.CurrentPlayer.IsInPenaltyBox && (!isGettingOutOfPenaltyBox))
+            if (_board.CurrentPlayer.IsInPenaltyBox)
                 return true;
 
             _board.CurrentPlayer.IncrementPurse();
