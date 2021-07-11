@@ -8,13 +8,7 @@ namespace ESGI.DesignPattern.Projet
         private double _amount;
         private DateTime _date;
 
-        public Payment()
-        {
-            _amount = 0.0;
-            _date = new DateTime();
-        }
-
-        public Payment(double amount, DateTime date)
+        public Payment(double amount = 0.0, DateTime date = new())
         {
             Amount = amount;
             Date = date;
