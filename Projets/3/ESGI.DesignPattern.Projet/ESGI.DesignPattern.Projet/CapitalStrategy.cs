@@ -3,20 +3,24 @@ namespace ESGI.DesignPattern.Projet
 {
     public abstract class CapitalStrategy
     {
-
-        private long MILLIS_PER_DAY = 86400000;
-        private long DAYS_PER_YEAR = 365;
+        // private TimeDuration _duration;
+        // private long MILLIS_PER_DAY = (long)TimeDuration.MillisPerDay;
+        // private long DAYS_PER_YEAR = (long)TimeDuration.DaysPerYear;
 
         public abstract double Capital(Loan loan);
 
-        protected double RiskFactorFor(Loan loan)
+        // protected double RiskFactorFor(Loan loan)
+        protected double RiskFactorFor()
         {
-            return RiskFactor.GetFactors().ForRating(loan.GetRiskRating());
+            return 0.03;
+            // return RiskFactor.GetFactors().ForRating(loan.GetRiskRating());
         }
 
-        protected double UnusedRiskFactorFor(Loan loan)
+        // protected double UnusedRiskFactorFor(Loan loan)
+        protected double UnusedRiskFactorFor()
         {
-            return UnusedRiskFactors.GetFactors().ForRating(loan.GetRiskRating());
+            return 0.01;
+            // return UnusedRiskFactors.GetFactors().ForRating(loan.GetRiskRating());
         }
 
         public virtual double Duration(Loan loan)
@@ -25,14 +29,14 @@ namespace ESGI.DesignPattern.Projet
         }
 
         protected double YearsTo(DateTime? endDate, Loan loan)
-        {
-            if (endDate == null)
-            {
-                throw new InvalidOperationException("EndDate is null for future operations calculus.");
-            }
-            
+        { 
             var beginDate = loan.GetToday() == null ? loan.GetStart() : loan.GetToday();
-            return (double)((endDate?.Ticks - beginDate?.Ticks) / MILLIS_PER_DAY / DAYS_PER_YEAR);
+            var timeDelta = (endDate?.Ticks - beginDate?.Ticks) / (long)TimeDuration.MillisPerDay;
+            timeDelta /= (long)TimeDuration.DaysPerYear;
+            
+            return (double) timeDelta;
+            
+            // return (double)((endDate?.Ticks - beginDate?.Ticks) / (long)TimeDuration.MillisPerDay / (long)TimeDuration.DaysPerYear);
         }
     }
 }
