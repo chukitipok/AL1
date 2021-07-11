@@ -8,7 +8,6 @@ namespace ESGI.DesignPattern.Projet
         public override double Capital(Loan loan)
         {
             return loan.GetCommitment() * Duration(loan) * RiskFactorFor();
-            // return loan.GetCommitment() * Duration(loan) * RiskFactorFor(loan);
         }
 
         public override double Duration(Loan loan)

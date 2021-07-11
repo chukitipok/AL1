@@ -66,7 +66,6 @@ namespace ESGI.DesignPattern.Projet.Tests
         {
             var advisedLineStrategy = new CapitalStrategyAdvisedLine();
             DateTime start = November(20, 2003);
-            // DateTime maturity = November(20, 2006);
             DateTime expiry = November(20, 2007);
 
             Loan advisedLineLoan = Loan.NewAdvisedLine(LOAN_AMOUNT, start, expiry, LOW_RISK_TAKING);
