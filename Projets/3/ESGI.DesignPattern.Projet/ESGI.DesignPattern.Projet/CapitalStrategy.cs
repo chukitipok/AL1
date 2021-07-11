@@ -3,20 +3,21 @@ namespace ESGI.DesignPattern.Projet
 {
     public abstract class CapitalStrategy
     {
-
+        private const double RiskFactorFor = 0.03;
+        private const double UnusedRiskFactorFor = 0.01;
         private long MILLIS_PER_DAY = 86400000;
         private long DAYS_PER_YEAR = 365;
 
         public abstract double Capital(Loan loan);
 
-        protected double RiskFactorFor(Loan loan)
+        protected double GetRiskFactorFor()
         {
-            return RiskFactor.GetFactors().ForRating(loan.GetRiskRating());
+            return RiskFactorFor;
         }
 
-        protected double UnusedRiskFactorFor(Loan loan)
+        protected double GetUnusedRiskFactorFor()
         {
-            return UnusedRiskFactors.GetFactors().ForRating(loan.GetRiskRating());
+            return UnusedRiskFactorFor;
         }
 
         public virtual double Duration(Loan loan)
