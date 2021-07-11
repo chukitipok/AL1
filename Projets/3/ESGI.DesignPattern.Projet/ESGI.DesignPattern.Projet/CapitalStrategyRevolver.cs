@@ -7,7 +7,5 @@
             return (loan.OutstandingRiskAmount() * Duration(loan) * RiskFactorFor(loan))
                         + (loan.UnusedRiskAmount() * Duration(loan) * this.UnusedRiskFactorFor(loan));
         }
-
-
     }
 }
