@@ -26,7 +26,12 @@ namespace ESGI.DesignPattern.Projet
 
         protected double YearsTo(DateTime? endDate, Loan loan)
         {
-            DateTime? beginDate = (loan.GetToday() == null ? loan.GetStart() : loan.GetToday());
+            if (endDate == null)
+            {
+                throw new InvalidOperationException("EndDate is null for future operations calculus.");
+            }
+            
+            var beginDate = loan.GetToday() == null ? loan.GetStart() : loan.GetToday();
             return (double)((endDate?.Ticks - beginDate?.Ticks) / MILLIS_PER_DAY / DAYS_PER_YEAR);
         }
     }
