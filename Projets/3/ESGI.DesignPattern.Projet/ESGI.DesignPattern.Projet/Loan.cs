@@ -65,11 +65,26 @@ namespace ESGI.DesignPattern.Projet
             return _commitment;
         }
 
+        public DateTime? GetMaturity()
+        {
+            return _maturity;
+        }
+
+        public double GetRiskRating()
+        {
+            return _riskRating;
+        }
+
         public void Payment(double amount, DateTime paymentDate)
         {
             _payments.Add(new Payment(amount, paymentDate));
         }
-        
+
+        public double Capital()
+        {
+            return _capitalStrategy.Capital(this);
+        }
+
         public DateTime? GetToday()
         {
             return _today;

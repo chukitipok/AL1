@@ -76,7 +76,51 @@ namespace ESGI.DesignPattern.Projet.Tests
 
             Assert.Equal(40027, advisedLineStrategy.Duration(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
             Assert.Equal(1200810, advisedLineStrategy.Capital(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
+            Assert.Equal(40027, advisedLineStrategy.Duration(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
         }
+        
+        [Fact()]
+        public void test_maturity()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
+
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal( November(20, 2006), termLoan.GetMaturity());
+        }
+        [Fact()]
+        public void test_riskrating()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
+
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal(HIGH_RISK_TAKING, actual: termLoan.GetRiskRating());
+        }
+        
+        [Fact()]
+        public void test_capital()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
+            var termStrategy = new CapitalStrategyTermLoan(); 
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal(termStrategy.Capital(termLoan), termLoan.Capital(), (int) TWO_DIGIT_PRECISION);
+        }
+        
     }
 }
 
