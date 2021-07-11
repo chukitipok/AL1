@@ -14,7 +14,7 @@ namespace ESGI.DesignPattern.Projet
             return RiskFactor.GetFactors().ForRating(loan.GetRiskRating());
         }
 
-        private double UnusedRiskFactorFor(Loan loan)
+        protected double UnusedRiskFactorFor(Loan loan)
         {
             return UnusedRiskFactors.GetFactors().ForRating(loan.GetRiskRating());
         }

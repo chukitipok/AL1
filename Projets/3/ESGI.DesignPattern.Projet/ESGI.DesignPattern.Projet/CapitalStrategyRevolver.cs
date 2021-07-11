@@ -5,12 +5,9 @@
         public override double Capital(Loan loan)
         {
             return (loan.OutstandingRiskAmount() * Duration(loan) * RiskFactorFor(loan))
-                        + (loan.UnusedRiskAmount() * Duration(loan) * UnusedRiskFactorFor(loan));
+                        + (loan.UnusedRiskAmount() * Duration(loan) * this.UnusedRiskFactorFor(loan));
         }
 
-        private double UnusedRiskFactorFor(Loan loan)
-        {
-            return UnusedRiskFactors.GetFactors().ForRating(loan.GetRiskRating());
-        }
+
     }
 }
