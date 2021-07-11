@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
 namespace ESGI.DesignPattern.Projet.Tests
@@ -52,11 +53,11 @@ namespace ESGI.DesignPattern.Projet.Tests
         [Fact()]
         public void payment_is_constructed_correctly()
         {
-            var _christmasDay = new DateTime(2010, 12, 25);
-            var _payment = new Payment(1000.0, _christmasDay);
+            var christmasDay = new DateTime(2010, 12, 25);
+            var payment = new Payment(1000.0, christmasDay);
 
-            Assert.Equal(1000, _payment.Amount);
-            Assert.Equal(_christmasDay, _payment.Date);
+            Assert.Equal(1000, payment.Amount);
+            Assert.Equal(christmasDay, payment.Date);
 
         }
 
@@ -65,7 +66,7 @@ namespace ESGI.DesignPattern.Projet.Tests
         {
             var advisedLineStrategy = new CapitalStrategyAdvisedLine();
             DateTime start = November(20, 2003);
-            DateTime maturity = November(20, 2006);
+            // DateTime maturity = November(20, 2006);
             DateTime expiry = November(20, 2007);
 
             Loan advisedLineLoan = Loan.NewAdvisedLine(LOAN_AMOUNT, start, expiry, LOW_RISK_TAKING);
@@ -75,8 +76,51 @@ namespace ESGI.DesignPattern.Projet.Tests
 
             Assert.Equal(40027, advisedLineStrategy.Duration(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
             Assert.Equal(1200810, advisedLineStrategy.Capital(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
+            Assert.Equal(40027, advisedLineStrategy.Duration(advisedLineLoan), (int)TWO_DIGIT_PRECISION);
         }
+        
+        [Fact()]
+        public void test_maturity()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
 
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal( November(20, 2006), termLoan.GetMaturity());
+        }
+        [Fact()]
+        public void test_riskrating()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
+
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal(HIGH_RISK_TAKING, actual: termLoan.GetRiskRating());
+        }
+        
+        [Fact()]
+        public void test_capital()
+        {
+            DateTime start = November(20, 2003);
+            DateTime maturity = November(20, 2006);
+            var termStrategy = new CapitalStrategyTermLoan(); 
+            Loan termLoan = Loan.NewTermLoan(LOAN_AMOUNT, start, maturity, HIGH_RISK_TAKING);
+            
+            termLoan.Payment(1000.00, November(20, 2004));
+            termLoan.Payment(1000.00, November(20, 2005));
+            termLoan.Payment(1000.00, November(20, 2006));
+
+            Assert.Equal(termStrategy.Capital(termLoan), termLoan.Capital(), (int) TWO_DIGIT_PRECISION);
+        }
+        
     }
 }
 

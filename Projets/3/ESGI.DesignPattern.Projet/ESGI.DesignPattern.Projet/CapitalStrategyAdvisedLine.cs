@@ -4,7 +4,7 @@
     {
         public override double Capital(Loan loan)
         {
-            return loan.GetCommitment() * loan.GetUnusedPercentage() * Duration(loan) * GetRiskFactorFor();
+            return loan.GetCommitment() * loan.GetUnusedPercentage() * Duration(loan) * RiskFactorFor();
         }
     }
 }
