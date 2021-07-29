@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ESGI.DesignPattern.Projet
 {
-    public class Loan : ILoan
+    public class Loan
     {
         double _commitment;
         private DateTime? _expiry;
@@ -33,27 +33,6 @@ namespace ESGI.DesignPattern.Projet
             _unusedPercentage = 1.0;
             _capitalStrategy = capitalStrategy;
             _payments = new List<Payment>();
-        }
-
-        public static Loan NewTermLoan(double commitment, DateTime start, DateTime maturity, int riskRating)
-        {
-            return new(commitment, start, null,
-                            maturity, riskRating, new CapitalStrategyTermLoan());
-        }
-
-        public  static Loan NewRevolver(double commitment, DateTime start, DateTime expiry, int riskRating)
-        {
-            return new(commitment, start, expiry,
-                            null, riskRating, new CapitalStrategyRevolver());
-        }
-
-        public static Loan NewAdvisedLine(double commitment, DateTime start, DateTime expiry, int riskRating)
-        {
-            if (riskRating > 3) return null;
-            Loan advisedLine = new Loan(commitment, start, expiry,
-                                        null, riskRating, new CapitalStrategyAdvisedLine());
-            advisedLine.SetUnusedPercentage(0.1);
-            return advisedLine;
         }
 
         public DateTime? GetExpiry()
